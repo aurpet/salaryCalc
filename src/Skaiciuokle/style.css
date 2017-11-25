@@ -1,0 +1,46 @@
+#text{
+    -fx-text-fill: #ff3550;
+    -fx-alignment: center;
+    -fx-font-family: sans-serif;
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+}
+#bpRoot{
+    -fx-background-image: url("file:///C:/Users/Aurimas/IdeaProjects/AtlyginimoSkaiciuokle/src/Img/background.jpg");
+}
+
+#buttons {
+    -fx-border-color: black;
+}
+
+#style{
+    -fx-padding: 3;
+    -fx-background-color: #fff7a3;
+    -fx-border-style: solid inside;
+    -fx-min-width: 160;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+}
+
+
+#style1{
+    -fx-padding: 3;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgba(41, 34, 218, 0.75);
+    -fx-background-color: #fff7a3;
+    -fx-border-style: solid inside;
+    -fx-min-width: 160;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+}
+
+#style2{
+    -fx-padding: 3;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgba(218, 16, 6, 0.75);
+    -fx-background-color: #fff7a3;
+    -fx-border-style: solid inside;
+    -fx-min-width: 160;
+    -fx-border-color: blue;
+    -fx-alignment: center;
+}
