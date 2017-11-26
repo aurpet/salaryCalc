@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AtlyginimoSkaiciuokle:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AtlyginimoSkaiciuokle_jar</output-path>
+    <root id="archive" name="AtlyginimoSkaiciuokle.jar">
+      <element id="module-output" name="AtlyginimoSkaiciuokle" />
+    </root>
+  </artifact>
+</component>

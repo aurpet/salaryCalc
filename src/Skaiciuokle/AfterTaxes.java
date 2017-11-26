@@ -1,13 +1,16 @@
 package Skaiciuokle;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -19,8 +22,10 @@ public class AfterTaxes {
     public Label lbSaleryAfter;
     public Label lblTexesCalc;
     public Label lblNpdCalc;
-    public  Label lblSveikatosCalc;
+    public Label lblSveikatosCalc;
     public Label lblFullCalc;
+    HBox hBox = new HBox(5);
+    GridPane pane;
 
 
     public AfterTaxes(Stage primaryStage) {
@@ -28,7 +33,7 @@ public class AfterTaxes {
         this.primaryStage = primaryStage;
         this.root = new BorderPane();
 
-        Scene scene = new Scene(this.root,400,400);
+        Scene scene = new Scene(this.root, 360, 480);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
 
@@ -43,11 +48,22 @@ public class AfterTaxes {
 
     }
 
-    private void addElementsToScene (){
+    private void addElementsToScene() {
         Label labelSalary = new Label("Atlyginimas popieriuje:");
         tfSalary = new TextField();
         tfSalary.setPromptText("Įveskite atlyginimą");
         tfSalary.setAlignment(Pos.CENTER);
+
+        Label labelVaikai = new Label("Auginami vaikai iki 18:");
+        ChoiceBox cb = new ChoiceBox();
+        cb.setItems(FXCollections.observableArrayList("0", "1", "2", "3", "4"));
+        cb.getSelectionModel().selectFirst();
+
+        ToggleGroup group = new ToggleGroup();
+        RadioButton button1 = new RadioButton("vienas");
+        RadioButton button2 = new RadioButton("su sutuoktiniu");
+        button1.setToggleGroup(group);
+        button2.setToggleGroup(group);
 
 
         Label labelSaleryAfter = new Label("Atlyginimas į rankas:");
@@ -74,47 +90,66 @@ public class AfterTaxes {
         Button calculate = new Button("Skaičiuoti");
         calculate.setMinWidth(100);
         calculate.setAlignment(Pos.CENTER);
-        calculate.setOnAction((ActionEvent e)->{ double salary = Double.parseDouble(tfSalary.getText());
-        double iRankas = (salary * 0.76);
-        double sodrai = (salary * 0.03);
-        double sveikatosDr = (salary * 0.06);
-        double darboVieta = (salary * 1.318);
+        calculate.setOnAction((ActionEvent e) -> {
+            if (tfSalary.getText() == null || tfSalary.getText().trim().isEmpty()) {
+                showAlert(Alert.AlertType.INFORMATION, pane.getScene().getWindow(),
+                        "Nieko neįvedėte!", "Įveskite gaunamą atlyginimą popieriuje!");
 
-        lbSaleryAfter.setText(String.valueOf(iRankas));
-        lblTexesCalc.setText(String.valueOf(sodrai));
-        lblSveikatosCalc.setText(String.valueOf(sveikatosDr));
-        lblFullCalc.setText(String.valueOf(darboVieta));
+            } else {
+                double salary = Double.parseDouble(tfSalary.getText());
 
+                double iRankas = (salary * 0.76);
+                double sodrai = (salary * 0.03);
+                double sveikatosDr = (salary * 0.06);
+                double darboVieta = (salary * 1.318);
+                double npd = (310 - (0.5 * salary));
+
+                lbSaleryAfter.setText(String.format("%.2f", iRankas));
+                lblTexesCalc.setText(String.format("%.2f", sodrai));
+                lblSveikatosCalc.setText(String.format("%.2f", sveikatosDr));
+                lblFullCalc.setText(String.format("%.2f", darboVieta));
+                lblNpdCalc.setText(String.format("%.2f", npd));
+
+                if (npd < 1) {
+                    lblNpdCalc.setText(String.format("netaikomi"));
+                }
+            }
         });
 
         Button cancel = new Button("Grįžti");
         cancel.setMinWidth(100);
         cancel.setAlignment(Pos.CENTER);
-        cancel.setOnAction((ActionEvent e)->{
+        cancel.setOnAction((ActionEvent e) -> {
             Calculator calculator = new Calculator(this.primaryStage);
         });
 
 
-        GridPane pane = new GridPane();
-        pane.add(labelSalary,0,0);
-        pane.add(tfSalary,1,0);
-        pane.add(labelSaleryAfter,0,1);
-        pane.add(lbSaleryAfter,1,1);
-        pane.add(lblTexesSodrai,0,2);
-        pane.add(lblTexesCalc,1,2);
-        pane.add(lblNpd,0,3);
-        pane.add(lblNpdCalc,1,3);
-        pane.add(lblSveikatosDr, 0, 4);
-        pane.add(lblSveikatosCalc, 1, 4);
-        pane.add(lblPNPD, 0,5);
-        pane.add(labelPNPDCalc, 1, 5);
-        pane.add(lblFullPrice, 0, 6);
-        pane.add(lblFullCalc, 1,6);
+        //add element on the HBox
+        hBox.getChildren().addAll(cb, button1, button2);
 
 
-        pane.add(calculate, 1, 9);
-        pane.add(cancel,1,10);
-        pane.setPadding(new Insets(10,10,10,10));
+        //add element on the gridpane
+        pane = new GridPane();
+        pane.add(labelSalary, 0, 0);
+        pane.add(tfSalary, 1, 0);
+        pane.add(labelVaikai, 0, 1);
+        pane.add(hBox, 1, 1);
+        pane.add(labelSaleryAfter, 0, 2);
+        pane.add(lbSaleryAfter, 1, 2);
+        pane.add(lblTexesSodrai, 0, 3);
+        pane.add(lblTexesCalc, 1, 3);
+        pane.add(lblNpd, 0, 4);
+        pane.add(lblNpdCalc, 1, 4);
+        pane.add(lblSveikatosDr, 0, 5);
+        pane.add(lblSveikatosCalc, 1, 5);
+        pane.add(lblPNPD, 0, 6);
+        pane.add(labelPNPDCalc, 1, 6);
+        pane.add(lblFullPrice, 0, 7);
+        pane.add(lblFullCalc, 1, 7);
+        pane.add(calculate, 1, 10);
+        pane.add(cancel, 1, 11);
+
+        pane.setPadding(new Insets(10, 10, 10, 10));
         pane.setVgap(10);
         pane.setHgap(10);
 
@@ -129,5 +164,17 @@ public class AfterTaxes {
         lblFullCalc.setId("style2");
     }
 
+
+    //alert when empty salary inpute textfield
+    private void showAlert(Alert.AlertType alerType, Window owner, String title, String message) {
+        Alert alert = new Alert(alerType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("file:///C:/Users/Aurimas/IdeaProjects/AtlyginimoSkaiciuokle/src/Img/alert.png"));
+        alert.show();
+
+    }
 
 }

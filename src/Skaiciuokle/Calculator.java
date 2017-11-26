@@ -56,11 +56,12 @@ public class Calculator {
 
 
 
-
         Button onPaper = new Button("Atlyginimas popieriuje");
         onPaper.setMinWidth(150);
         onPaper.setAlignment(Pos.CENTER);
-
+        onPaper.setOnAction((ActionEvent e)->{
+            BeforeTaxes beforeTaxes = new BeforeTaxes(this.primaryStage);
+        });
 
 
         HBox hbLoginText = new HBox();

@@ -17,7 +17,7 @@
     -fx-padding: 3;
     -fx-background-color: #fff7a3;
     -fx-border-style: solid inside;
-    -fx-min-width: 160;
+    -fx-min-width: 200;
     -fx-border-color: blue;
     -fx-alignment: center;
 }
@@ -29,7 +29,7 @@
     -fx-text-fill: rgba(41, 34, 218, 0.75);
     -fx-background-color: #fff7a3;
     -fx-border-style: solid inside;
-    -fx-min-width: 160;
+    -fx-min-width: 200;
     -fx-border-color: blue;
     -fx-alignment: center;
 }
@@ -40,7 +40,7 @@
     -fx-text-fill: rgba(218, 16, 6, 0.75);
     -fx-background-color: #fff7a3;
     -fx-border-style: solid inside;
-    -fx-min-width: 160;
+    -fx-min-width: 200;
     -fx-border-color: blue;
     -fx-alignment: center;
 }
